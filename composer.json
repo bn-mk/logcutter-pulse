@@ -17,8 +17,8 @@
   },
   "autoload": {
     "psr-4": {
-    "Logcutter\LogPulse\": "src/"
+      "Logcutter\\LogPulse\\": "src/"
     }
-  }
+  },
   "minimum-stability": "stable"
 }

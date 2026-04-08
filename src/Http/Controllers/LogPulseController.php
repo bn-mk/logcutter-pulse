@@ -3,6 +3,7 @@
 namespace Logcutter\LogPulse\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 use Inertia\Inertia;
 use Inertia\Response;
 use Logcutter\LogPulse\Http\Requests\IssueIndexRequest;
@@ -10,7 +11,7 @@ use Logcutter\LogPulse\Services\LogExplorerService;
 
 class LogPulseController
 {
-    public function index(IssueIndexRequest $request, LogExplorerService $logExplorerService): Response
+    public function index(IssueIndexRequest $request, LogExplorerService $logExplorerService): Response|View
     {
         $filters = $this->normalizedFilters($request->validated());
         $issues = $logExplorerService->groupedIssues(
@@ -21,12 +22,20 @@ class LogPulseController
             $filters['file'],
         );
 
-        return Inertia::render('logpulse/index', [
+        $viewData = [
             'issues' => $issues,
             'filters' => $filters,
             'logFiles' => $logExplorerService->availableLogFiles(),
             'uiSettings' => $this->uiSettings(),
-        ]);
+        ];
+
+        if ((string) config('logpulse.ui.driver', 'blade') === 'inertia') {
+            Inertia::setRootView((string) config('logpulse.inertia.root_view', 'logpulse::app'));
+
+            return Inertia::render('logpulse/index', $viewData);
+        }
+
+        return view('logpulse::index', $viewData);
     }
 
     public function issues(IssueIndexRequest $request, LogExplorerService $logExplorerService): JsonResponse

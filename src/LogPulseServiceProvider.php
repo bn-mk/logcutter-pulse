@@ -14,6 +14,7 @@ class LogPulseServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'logpulse');
 
         $this->publishes([
             __DIR__.'/../config/logpulse.php' => config_path('logpulse.php'),

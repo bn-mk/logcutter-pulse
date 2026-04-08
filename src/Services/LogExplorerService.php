@@ -266,7 +266,8 @@ class LogExplorerService
             return [];
         }
 
-        preg_match_all('/^\[(?<timestamp>[^\]]+)\]\s+[^.]+\.(?<level>[A-Z]+):\s(?<message>.*)$/m', $content, $matches, PREG_OFFSET_CAPTURE);
+        // Match only canonical Laravel log headers and avoid multi-line over-capture.
+        preg_match_all('/^\[(?<timestamp>[^\]\r\n]+)\]\s+(?<channel>[A-Za-z0-9_.-]+)\.(?<level>[A-Z]+):\s(?<message>.*)$/m', $content, $matches, PREG_OFFSET_CAPTURE);
 
         if (! isset($matches[0])) {
             return [];
@@ -314,8 +315,14 @@ class LogExplorerService
                 is_array($controllerFrame) ? $controllerFrame : null,
             );
 
+            try {
+                $timestamp = CarbonImmutable::parse($timestampRaw);
+            } catch (\Throwable) {
+                continue;
+            }
+
             $entries[] = [
-                'timestamp' => CarbonImmutable::parse($timestampRaw),
+                'timestamp' => $timestamp,
                 'level' => array_key_exists($level, self::LEVEL_RANK) ? $level : 'error',
                 'message' => $message,
                 'exception_class' => $this->extractExceptionClass($message),

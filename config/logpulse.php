@@ -32,4 +32,12 @@ return [
         'threshold' => (int) env('LOGPULSE_NOTIFICATION_THRESHOLD', 3),
         'level' => env('LOGPULSE_NOTIFICATION_LEVEL', 'error'),
     ],
+
+    'ui' => [
+        'driver' => env('LOGPULSE_UI_DRIVER', 'blade'),
+    ],
+
+    'inertia' => [
+        'root_view' => env('LOGPULSE_INERTIA_ROOT_VIEW', 'logpulse::app'),
+    ],
 ];

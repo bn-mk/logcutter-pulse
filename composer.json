@@ -7,14 +7,13 @@
     "php": "^8.3",
     "inertiajs/inertia-laravel": "^2.0 || ^3.0",
     "laravel/framework": "^12.0 || ^13.0"
-  }
-},
-"extra": {
-  "laravel": {
-    "providers": [
-      "Logcutter\\LogPulse\\LogPulseServiceProvider"
-    ]
-  }
-},
-"minimum-stability": "stable"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Logcutter\\LogPulse\\LogPulseServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "stable"
 }

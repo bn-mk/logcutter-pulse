@@ -1,0 +1,25 @@
+{
+    "name": "logcutter/logpulse",
+    "description": "Logcutter LogPulse backend analysis engine for Laravel applications.",
+    "type": "library",
+    "license": "MIT",
+    "version": "0.1.0",
+    "require": {
+        "php": "^8.3",
+        "inertiajs/inertia-laravel": "^3.0",
+        "laravel/framework": "^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Logcutter\\LogPulse\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Logcutter\\LogPulse\\LogPulseServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable"
+}
